@@ -64,34 +64,32 @@
 >  or alternative sources.)
 >
 > 
->- Install the Android SDK Studio. 
+>1. Install the Android SDK Studio. 
 >
->  - In the environment variables add: 
->  
->    ANDROID_HOME="<path to Android/sdk folder in your profile> "
+>    - In the environment variables add:
+>      ANDROID_HOME="<path to Android/sdk folder in your profile> "
 >
 > 
->- Create an emulator based on Android OS
->  - Open Android SDK Studio
->  - Launch the virtual device manager
->  - Create a new virtual device with the parameters given in this description under "Environment" 
->  - Run virtual device 
+>2. Create an emulator based on Android OS
+>    - Open Android SDK Studio
+>    - Launch the virtual device manager
+>    - Create a new virtual device with the parameters given in this description under "Environment" 
+>    - Run virtual device 
 >  
 > 
->- Install Appium server end run:
->
+>3. Install Appium server end run:
 >  (https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)  
->  - Select the installation file corresponding to your OS. 
->  - Install Appium server
+>    - Select the installation file corresponding to your OS. 
+>    - Install Appium server
 >  
 ---
 >
 > ### _**Run tests**_:
 > #### _**Start Appium server**_: 
-> - You can start the server from the list of installed programs
+> 1. You can start the server from the list of installed programs
 >   - run the program «Appium"
 >   - press the "startServer" button 
-> - Alternative startup option
+> 2. Alternative startup option
 >   - Open a terminal or command line
 >   - run a console command: 
 >   ~~~
