@@ -13,4 +13,3 @@ class LoginPage(Base):
     def skip_registration(self):
         self.wait.until(EC.element_to_be_clickable(self.get_element(self.skip_button)))
         self.get_element(self.skip_button).click()
-        return self
