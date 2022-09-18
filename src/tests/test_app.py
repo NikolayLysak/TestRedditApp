@@ -1,4 +1,5 @@
 import pytest
+import allure
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
@@ -9,27 +10,37 @@ from src.pages.search_page import SearchPage
 from src.utils.helper import Helper
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def get_driver():
-    desired_caps = ConfigReader().get_desired_caps()
-    executor = ConfigReader().get_url()
-    driver = webdriver.Remote(command_executor=executor,
-                              options=UiAutomator2Options().load_capabilities(desired_caps), )
-    driver.implicitly_wait(5)
     print("\nSetUp mobile driver")
+    executor = ConfigReader().get_url()
+    options = UiAutomator2Options().load_capabilities(ConfigReader().get_desired_caps())
+    driver = webdriver.Remote(command_executor=executor, options=options)
+    driver.implicitly_wait(5)
     yield driver
-    driver.quit()
     print("\nTear down mobile driver")
+    driver.quit()
 
 
+@allure.parent_suite("Mobile")
+@allure.suite("Reddit App sort")
+@allure.title("Selecting the result with the most Up Votes.")
 def test_skip_registration(get_driver):
     login_page = LoginPage(get_driver)
     search_page = SearchPage(get_driver)
     results_page = ResultsPage(get_driver)
 
-    login_page.click_skip()
-    search_page.search_info("Banking").select_search_result("Banking")
-    collection = results_page.sort_results().collect_results()
-    result = Helper().select_result(collection)
-    Helper.output_of_results(result)
+    with allure.step("Skip logging in the app"):
+        login_page.skip_registration()
 
+    with allure.step("Search for posts on Banking"):
+        search_page.start_search_by_keyword("Banking").selecting_a_search_criterion("Banking")
+
+    with allure.step("Selecting 20+ hottest posts from the list of results"):
+        collection = results_page.selecting_the_sorting_of_results().collect_results()
+        assert len(collection) >= 20
+
+    with allure.step("Selecting a post from the list with the maximum number of up votes"):
+        Helper.output_of_results(
+            Helper.select_result(collection)
+        )

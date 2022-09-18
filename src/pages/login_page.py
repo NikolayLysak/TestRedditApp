@@ -10,8 +10,7 @@ class LoginPage(Base):
 
     skip_button = ("id", "com.reddit.frontpage:id/skip_button")
 
-    def click_skip(self):
-        self.wait.until(EC.visibility_of(self.get_element(self.skip_button)))
+    def skip_registration(self):
         self.wait.until(EC.element_to_be_clickable(self.get_element(self.skip_button)))
         self.get_element(self.skip_button).click()
         return self

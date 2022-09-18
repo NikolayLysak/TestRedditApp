@@ -31,10 +31,11 @@ class Helper:
         filtered_resp = list(filter(lambda obj: (obj.vote != "Vote"), collection))
         return filtered_resp
 
-    def select_result(self, collection: list) -> List[Post]:
-        result_collection = self.sort_entries_by_accessibility(
-            self.filter_entries_by_votes(
-                self.parse_to_list_of_objects(collection)
+    @staticmethod
+    def select_result(collection: list) -> List[Post]:
+        result_collection = Helper.sort_entries_by_accessibility(
+            Helper.filter_entries_by_votes(
+                Helper.parse_to_list_of_objects(collection)
             )
         )
         return result_collection

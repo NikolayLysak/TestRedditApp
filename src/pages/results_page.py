@@ -8,8 +8,7 @@ class ResultsPage(Base):
         super().__init__(driver)
 
     sort_description_button = ("id", "com.reddit.frontpage:id/sort_description")
-    sort_value = (
-        "xpath", "//*[@resource-id='com.reddit.frontpage:id/bottomsheet_recycler_view']/android.view.ViewGroup[1]")
+    sort_by_hot = ("xpath", "//*[contains(@text, 'Hot')]/..")
     link_list = ("id", "com.reddit.frontpage:id/link_list")
     result_bodies = ("xpath", "//*[@resource-id='com.reddit.frontpage:id/link_left_holder']/..")
     result_titles = ("id", "com.reddit.frontpage:id/title")
@@ -18,11 +17,11 @@ class ResultsPage(Base):
     result_users = ("id", "com.reddit.frontpage:id/link_alt_link_label")
     result_comments = ("id", "com.reddit.frontpage:id/comments")
 
-    def sort_results(self):
+    def selecting_the_sorting_of_results(self):
         self.wait.until(EC.element_to_be_clickable(self.get_element(self.sort_description_button)))
         self.get_element(self.sort_description_button).click()
-        self.wait.until(EC.visibility_of(self.get_element(self.sort_value)))
-        self.get_element(self.sort_value).click()
+        self.wait.until(EC.visibility_of(self.get_element(self.sort_by_hot)))
+        self.get_element(self.sort_by_hot).click()
         return self
 
     def collect_results(self):

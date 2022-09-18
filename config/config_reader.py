@@ -1,6 +1,5 @@
 import configparser
 import os
-from typing import Dict
 
 
 class ConfigReader:
@@ -22,9 +21,7 @@ class ConfigReader:
 
     @staticmethod
     def get_app_path() -> str:
-        file_path = os.path.abspath("TestRedditApp") + '/app/Reddit.apk'
-        print(file_path)
-        if "tests" in f'{os.popen("pwd").read().rstrip()}':
+        if "tests" in f'{os.popen("pwd").read()}':
             return f'{os.popen("pwd").read().rstrip()}/../../app/Reddit.apk'
         else:
             return f'{os.popen("pwd").read().rstrip()}/app/Reddit.apk'

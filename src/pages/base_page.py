@@ -18,34 +18,34 @@ class Base:
         method = locator[0]
         value = locator[1]
 
-        if method == 'id':
+        if method == "id":
             return self.driver.find_element(AppiumBy.ID, value)
-        elif method == 'xpath':
+        elif method == "xpath":
             return self.driver.find_element(AppiumBy.XPATH, value)
-        elif method == 'accessibility_id':
+        elif method == "accessibility_id":
             return self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, value)
         else:
-            raise Exception('Invalid locator method.')
+            raise Exception("Invalid locator method.")
 
     def get_elements(self, locator: tuple) -> list[WebElement]:
         method = locator[0]
         value = locator[1]
 
-        if method == 'id':
+        if method == "id":
             return self.driver.find_elements(AppiumBy.ID, value)
-        elif method == 'xpath':
+        elif method == "xpath":
             return self.driver.find_elements(AppiumBy.XPATH, value)
-        elif method == 'accessibility_id':
+        elif method == "accessibility_id":
             return self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, value)
         else:
-            raise Exception('Invalid locator method.')
+            raise Exception("Invalid locator method.")
 
     def swipe_element(self, loc):
         self.wait.until(EC.visibility_of_all_elements_located(loc))
         element = self.get_elements(loc)[-1]
         actions = TouchAction(self.driver)
         if element.is_enabled():
-            actions.long_press(x=300, y=(element.location['y'])).move_to(x=300, y=603).release().perform()
+            actions.long_press(x=300, y=(element.location["y"])).move_to(x=300, y=603).release().perform()
         else:
             actions.long_press(x=300, y=2600).move_to(x=300, y=2400).release().perform()
 

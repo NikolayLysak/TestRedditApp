@@ -9,12 +9,12 @@ class SearchPage(Base):
     search_field = ("id", "com.reddit.frontpage:id/search")
     search_results = ("id", "com.reddit.frontpage:id/community_name")
 
-    def search_info(self, request: str):
+    def start_search_by_keyword(self, request: str):
         self.get_element(self.search_button).click()
         self.get_element(self.search_field).send_keys(request)
         return self
 
-    def select_search_result(self, request: str):
+    def selecting_a_search_criterion(self, request: str):
         results = self.get_elements(self.search_results)
         for result in results:
             if result.get_attribute("text") == f'r/{request}':
