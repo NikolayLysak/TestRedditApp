@@ -79,7 +79,7 @@
 > 
 >3. Install Appium server end run:
 >    ~~~
->    https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)
+>    https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4
 >    ~~~  
 >    - Select the installation file corresponding to your OS. 
 >    - Install Appium server
