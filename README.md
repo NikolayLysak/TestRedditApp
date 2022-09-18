@@ -58,26 +58,26 @@
 >
 > ### _**Startup preconditions:**_
 >  In order to successfully run the tests you must:
->- Download application file and save into 'app' folder as 'Reddit.apk'
+>1. Download application file and save into 'app' folder as 'Reddit.apk'
 >  (Unfortunately, GitHub does not allow you to save files larger than 100Mb. 
 >  In this regard, the application file will have to download yourself from the specified resource, 
 >  or alternative sources.)
 >
 > 
->1. Install the Android SDK Studio. 
+>2. Install the Android SDK Studio. 
 >
 >    - In the environment variables add:
 >      ANDROID_HOME="<path to Android/sdk folder in your profile> "
 >
 > 
->2. Create an emulator based on Android OS
+>3. Create an emulator based on Android OS
 >    - Open Android SDK Studio
 >    - Launch the virtual device manager
 >    - Create a new virtual device with the parameters given in this description under "Environment" 
 >    - Run virtual device 
 >  
 > 
->3. Install Appium server end run:
+>4. Install Appium server end run:
 >    ~~~
 >    https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4
 >    ~~~  
