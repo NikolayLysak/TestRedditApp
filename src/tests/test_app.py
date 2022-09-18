@@ -12,14 +12,15 @@ from src.utils.helper import Helper
 
 @pytest.fixture(scope="session")
 def get_driver():
-    print("\nSetUp mobile driver")
-    executor = ConfigReader().get_url()
-    options = UiAutomator2Options().load_capabilities(ConfigReader().get_desired_caps())
-    driver = webdriver.Remote(command_executor=executor, options=options)
-    driver.implicitly_wait(5)
-    yield driver
-    print("\nTear down mobile driver")
-    driver.quit()
+    with allure.step("Starting the 'Reddit' application"):
+        print("\nSetUp mobile driver")
+        executor = ConfigReader().get_url()
+        options = UiAutomator2Options().load_capabilities(ConfigReader().get_desired_caps())
+        driver = webdriver.Remote(command_executor=executor, options=options)
+        driver.implicitly_wait(5)
+        yield driver
+        print("\nTear down mobile driver")
+        driver.quit()
 
 
 @allure.parent_suite("Mobile")

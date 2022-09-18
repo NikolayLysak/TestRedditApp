@@ -1,5 +1,6 @@
 .idea
 .git
 .pytest_cache
-/venv
-/app
+venv
+app
+allure_results
