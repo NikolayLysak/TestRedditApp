@@ -78,7 +78,9 @@
 >  
 > 
 >3. Install Appium server end run:
->  (https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)  
+>    ~~~
+>    https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)
+>    ~~~  
 >    - Select the installation file corresponding to your OS. 
 >    - Install Appium server
 >  
@@ -87,14 +89,14 @@
 > ### _**Run tests**_:
 > #### _**Start Appium server**_: 
 > 1. You can start the server from the list of installed programs
->   - run the program «Appium"
->   - press the "startServer" button 
+>     - run the program «Appium"
+>     - press the "startServer" button 
 > 2. Alternative startup option
->   - Open a terminal or command line
->   - run a console command: 
->   ~~~
->   appium -a 127.0.0.1 -p 4723 -pa wd/hub
->   ~~~
+>     - Open a terminal or command line
+>     - run a console command: 
+>     ~~~
+>     appium -a 127.0.0.1 -p 4723 -pa wd/hub
+>     ~~~
 > #### _**Do not close server window until the test is finished**_
 >
 > ### _**To run the tests, please use the console command below:**_
