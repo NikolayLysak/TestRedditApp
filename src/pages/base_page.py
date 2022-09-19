@@ -12,7 +12,7 @@ class Base:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 20)
+        self.wait = WebDriverWait(driver, 10)
 
     tool_bar = (AppiumBy.ID, "com.reddit.frontpage:id/toolbar")
     tab_layout = (AppiumBy.ID, "com.reddit.frontpage:id/tab_layout")
