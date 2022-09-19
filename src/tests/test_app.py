@@ -1,7 +1,6 @@
-import pytest
 import allure
+import pytest
 from appium import webdriver
-from appium.options.android import UiAutomator2Options
 
 from config.config_reader import ConfigReader
 from src.pages.login_page import LoginPage
@@ -14,10 +13,10 @@ from src.utils.helper import Helper
 def get_driver():
     with allure.step("Starting the 'Reddit' application"):
         print("\nSetUp mobile driver")
-        executor = ConfigReader().get_url()
-        options = UiAutomator2Options().load_capabilities(ConfigReader().get_desired_caps())
-        driver = webdriver.Remote(command_executor=executor, options=options)
-        driver.implicitly_wait(5)
+        driver = webdriver.Remote(
+            command_executor=ConfigReader().get_url(),
+            desired_capabilities=ConfigReader().get_desired_caps()
+        )
         yield driver
         print("\nTear down mobile driver")
         driver.quit()
@@ -38,8 +37,8 @@ def test_skip_registration(get_driver):
         search_page.start_search_by_keyword("Banking").selecting_a_search_criterion("Banking")
 
     with allure.step("Selecting 20+ hottest posts from the list of results"):
-        collection = results_page.selecting_the_sorting_of_results().collect_results()
-        assert len(collection) >= 20
+        collection = results_page.selecting_the_sorting_of_results("Hot").collect_results()
+        assert len(collection) >= 20, "The number of saved records does not meet the required criterion"
 
     with allure.step("Selecting a post from the list with the maximum number of up votes"):
         Helper.output_of_results(

@@ -28,8 +28,8 @@ class Helper:
     # Filter response data by price volume
     @staticmethod
     def filter_entries_by_votes(collection: List[Post]) -> List[Post]:
-        filtered_resp = list(filter(lambda obj: (obj.vote != "Vote"), collection))
-        assert len(filtered_resp) > 0
+        filtered_resp = list(filter(lambda obj: obj.vote != "Vote", collection))
+        assert len(filtered_resp) > 0, "The list is empty, not a single item that meets the filtering criteria"
         return filtered_resp
 
     @staticmethod
@@ -42,15 +42,14 @@ class Helper:
         return result_collection
 
     @staticmethod
-    def output_of_results(collection: List[Post], index: int = 0) -> None:
-        print(f'\n\nTopic title: "{collection[index].title}"')
-        print(f'Author: {collection[index].name.split("/")[1]}')
-        print(f'Date of posting: {collection[index].posted.strip().split(" ")[1]}')
-        print(f'Commentaries: {collection[index].comments}')
-
-        if collection[index].vote == collection[index+1].vote:
-            index += 1
-            Helper.output_of_results(collection, index)
+    def output_of_results(collection: List[Post]):
+        max_vote_value = collection[0].vote
+        results = list(filter(lambda obj: obj.vote == max_vote_value, collection))
+        for result in results:
+            print(f'\n\nTopic title: "{result.title}"')
+            print(f'Author: {result.name.split("/")[1]}')
+            print(f'Date of posting: {result.posted.strip().split(" ")[1]}')
+            print(f'Commentaries: {result.comments}')
 
 
 

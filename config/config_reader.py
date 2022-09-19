@@ -15,7 +15,8 @@ class ConfigReader:
             "platformVersion": self.config.get("Android", "platformVersion"),
             "udid": self.config.get("Android", "udid"),
             "deviceName": self.config.get("Android", "deviceName"),
-            "app": self.get_app_path()
+            "app": self.get_app_path(),
+            "noReset": self.config.get("Android", "noReset")
         }
         return desired_caps
 

@@ -1,7 +1,9 @@
 from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 from appium.webdriver.webdriver import WebDriver
+from retry import retry
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -14,40 +16,57 @@ class Base:
         self.driver = driver
         self.wait = WebDriverWait(driver, 20)
 
-    def get_element(self, locator: tuple) -> WebElement:
-        method = locator[0]
-        value = locator[1]
+    tool_bar = (AppiumBy.ID, "com.reddit.frontpage:id/toolbar")
+    tab_layout = (AppiumBy.ID, "com.reddit.frontpage:id/tab_layout")
 
-        if method == "id":
-            return self.driver.find_element(AppiumBy.ID, value)
-        elif method == "xpath":
-            return self.driver.find_element(AppiumBy.XPATH, value)
-        elif method == "accessibility_id":
-            return self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, value)
+    def wait_element_be_disabled(self, locator: tuple):
+        self.wait.until(EC.invisibility_of_element_located(locator))
+
+    def wait_element_be_enabled(self, locator: tuple):
+        self.wait.until(EC.visibility_of_all_elements_located(locator))
+
+    @retry((TimeoutException, NoSuchElementException), 3, 1)
+    def get_clickable_element(self, locator: tuple) -> WebElement:
+        return self.wait.until(EC.element_to_be_clickable(locator))
+
+    @retry((TimeoutException, NoSuchElementException), 3, 1)
+    def get_visible_element(self, locator: tuple) -> WebElement:
+        return self.wait.until(EC.visibility_of_element_located(locator))
+
+    @retry((TimeoutException, NoSuchElementException), 3, 1)
+    def get_all_visible_elements(self, locator: tuple) -> list[WebElement]:
+        return self.wait.until(EC.visibility_of_all_elements_located(locator))
+
+    def clic_by_element(self, locator: tuple):
+        self.get_clickable_element(locator).click()
+
+    def fill_element_field(self, locator: tuple, value: str):
+        self.get_visible_element(locator).send_keys(value)
+
+    def get_y_offset(self) -> int:
+        offset = self.get_visible_element(self.tool_bar).size['height'] + \
+                 self.get_visible_element(self.tab_layout).size['height']
+        return offset
+
+    def scroll_results_list(self, locator: tuple):
+        elements = self.get_all_visible_elements(locator)
+
+        if elements[-1].is_enabled():
+            coord_x1: int = elements[-1].location["x"]
+            coord_x2: int = coord_x1
+            coord_y1: int = elements[-1].location["y"] - 5
+            coord_y2: int = self.get_y_offset()
         else:
-            raise Exception("Invalid locator method.")
+            coord_x1: int = 300
+            coord_x2: int = 300
+            coord_y1: int = 1250
+            coord_y2: int = 1000
 
-    def get_elements(self, locator: tuple) -> list[WebElement]:
-        method = locator[0]
-        value = locator[1]
-
-        if method == "id":
-            return self.driver.find_elements(AppiumBy.ID, value)
-        elif method == "xpath":
-            return self.driver.find_elements(AppiumBy.XPATH, value)
-        elif method == "accessibility_id":
-            return self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, value)
-        else:
-            raise Exception("Invalid locator method.")
-
-    def swipe_element(self, loc):
-        self.wait.until(EC.visibility_of_all_elements_located(loc))
-        element = self.get_elements(loc)[-1]
-        actions = TouchAction(self.driver)
-        if element.is_enabled():
-            actions.long_press(x=300, y=(element.location["y"])).move_to(x=300, y=603).release().perform()
-        else:
-            actions.long_press(x=300, y=2600).move_to(x=300, y=2400).release().perform()
-
-    def hide_keyboard(self):
-        self.driver.hide_keyboard()
+        actions = ActionChains(self.driver, 2000)
+        actions \
+            .w3c_actions.pointer_action \
+            .move_to_location(coord_x1, coord_y1) \
+            .pointer_down() \
+            .move_to_location(coord_x2, coord_y2) \
+            .release()
+        actions.perform()

@@ -1,15 +1,14 @@
-from selenium.webdriver.support import expected_conditions as EC
+from appium.webdriver.common.appiumby import AppiumBy
 
 from src.pages.base_page import Base
 
 
 class LoginPage(Base):
-
-    def __init__(self, driver):
-        super().__init__(driver)
-
-    skip_button = ("id", "com.reddit.frontpage:id/skip_button")
+    progress_bar = (AppiumBy.ID, "com.reddit.frontpage:id/progress_bar")
+    welcome_banner = (AppiumBy.ID, "com.reddit.frontpage:id/welcome_snoo")
+    skip_button = (AppiumBy.ID, "com.reddit.frontpage:id/skip_button")
 
     def skip_registration(self):
-        self.wait.until(EC.element_to_be_clickable(self.get_element(self.skip_button)))
-        self.get_element(self.skip_button).click()
+        self.wait_element_be_disabled(self.progress_bar)
+        self.wait_element_be_enabled(self.welcome_banner)
+        self.clic_by_element(self.skip_button)
