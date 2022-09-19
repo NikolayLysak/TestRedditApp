@@ -29,6 +29,7 @@ class Helper:
     @staticmethod
     def filter_entries_by_votes(collection: List[Post]) -> List[Post]:
         filtered_resp = list(filter(lambda obj: (obj.vote != "Vote"), collection))
+        assert len(filtered_resp) > 0
         return filtered_resp
 
     @staticmethod
