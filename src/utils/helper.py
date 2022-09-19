@@ -19,13 +19,13 @@ class Helper:
         response = list(map(lambda obj: Post(**obj), row_data))
         return response
 
-    # Sort data by accessibility
+    # Sort data by vote value
     @staticmethod
     def sort_entries_by_accessibility(collection: List[Post], descending=True) -> List[Post]:
         collection.sort(key=lambda obj: int(obj.vote), reverse=descending)
         return collection
 
-    # Filter response data by price volume
+    # Filter response data by empty Vote volume
     @staticmethod
     def filter_entries_by_votes(collection: List[Post]) -> List[Post]:
         filtered_resp = list(filter(lambda obj: obj.vote != "Vote", collection))
