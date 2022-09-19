@@ -1,8 +1,6 @@
 from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.webdriver import WebDriver
-from retry import retry
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -22,18 +20,12 @@ class Base:
     def wait_element_be_disabled(self, locator: tuple):
         self.wait.until(EC.invisibility_of_element_located(locator))
 
-    def wait_element_be_enabled(self, locator: tuple):
-        self.wait.until(EC.visibility_of_all_elements_located(locator))
-
-    @retry((TimeoutException, NoSuchElementException), 3, 1)
     def get_clickable_element(self, locator: tuple) -> WebElement:
         return self.wait.until(EC.element_to_be_clickable(locator))
 
-    @retry((TimeoutException, NoSuchElementException), 3, 1)
     def get_visible_element(self, locator: tuple) -> WebElement:
         return self.wait.until(EC.visibility_of_element_located(locator))
 
-    @retry((TimeoutException, NoSuchElementException), 3, 1)
     def get_all_visible_elements(self, locator: tuple) -> list[WebElement]:
         return self.wait.until(EC.visibility_of_all_elements_located(locator))
 
