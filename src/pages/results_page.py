@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 from selenium.webdriver.support import expected_conditions as EC
 
 from src.pages.base_page import Base
@@ -24,7 +26,7 @@ class ResultsPage(Base):
         self.get_element(self.sort_by_hot).click()
         return self
 
-    def collect_results(self):
+    def collect_results(self) -> list[dict]:
         list_of_result_entries = list()
         while len(list_of_result_entries) <= 20:
             self.swipe_element(self.result_bodies)
