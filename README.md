@@ -41,7 +41,7 @@
 >    |  |_search_page.py (SearhPage object, inherits the BasePage)
 >    |
 >    |_tests
->    |  |sort_api_response_test.py (Contains the test method)
+>    |  |_test_app.py (Contains the test method)
 >    |
 >    |_utils
 >       |_helper.py (Contains methods for interacting and processing data)
