@@ -46,10 +46,7 @@ class Helper:
         max_vote_value = collection[0].vote
         results = list(filter(lambda obj: obj.vote == max_vote_value, collection))
         for result in results:
-            print(f'\n\nTopic title: "{result.title}"')
-            print(f'Author: {result.name.split("/")[1]}')
-            print(f'Date of posting: {result.posted.strip().split(" ")[1]}')
-            print(f'Commentaries: {result.comments}')
-
-
-
+            print(f'\n\nTopic title: "{result.title}"'
+                  f'\nAuthor: {result.name.split("/")[1]}'
+                  f'\nDate of posting: {result.posted.strip().split(" ")[1]}'
+                  f'\nCommentaries: {result.comments}')
