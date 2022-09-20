@@ -16,10 +16,9 @@ class SearchPage(Base):
         return self
 
     def selecting_a_search_criterion(self, request: str):
-        results = self.get_all_visible_elements(self.search_results)
-        for result in results:
-            if (result.get_attribute("text") == f'r/{request}') | (result.get_attribute("text") == f'{request}'):
+        for result in self.get_all_visible_elements(self.search_results):
+            res_text = result.get_attribute("text")
+            if res_text in [f'r/{request}', f'{request}']:
                 result.click()
-                break
-            elif results.index(result) == len(results) - 1:
-                raise Exception("There are no results satisfying the specified sorting criterion.")
+                return
+        raise Exception("There are no results satisfying the specified sorting criterion.")
