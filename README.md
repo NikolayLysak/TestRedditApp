@@ -89,7 +89,7 @@
 > ### _**Run tests**_:
 > #### _**Start Appium server**_: 
 > You can start the server from the list of installed programs
->   - run the program «Appium"
+>   - run the program "Appium"
 >   - press the "startServer" button 
 > 
 > #### _**Do not close server window until the test is finished**_
