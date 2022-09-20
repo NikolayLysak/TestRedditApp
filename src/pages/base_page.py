@@ -52,7 +52,7 @@ class Base:
             coord_x1: int = 300
             coord_x2: int = 300
             coord_y1: int = 1250
-            coord_y2: int = 1000
+            coord_y2: int = 750
 
         actions = ActionChains(self.driver, 2000)
         actions \
