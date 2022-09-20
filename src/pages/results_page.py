@@ -24,34 +24,36 @@ class ResultsPage(Base):
         self.get_visible_element(self.sort_by_locator(sort_by_criterion)).click()
         return self
 
-    def collect_results(self) -> list[dict]:
+    def collect_results(self, min_items_count_to_collect=20) -> list[dict]:
         list_of_result_entries = list()
+        saved_list_of_results = list()
         iteration = 0
 
-        while len(list_of_result_entries) <= 20:
+        while len(list_of_result_entries) <= min_items_count_to_collect:
             iteration += 1
-            saved_len = len(list_of_result_entries)
             self.scroll_results_list(self.result_bodies)
+            titles_list = self.get_all_visible_elements(self.result_titles)
+            names_list = self.get_all_visible_elements(self.result_users)
+            posted_list = self.get_all_visible_elements(self.result_time_posted)
+            votes_list = self.get_all_visible_elements(self.result_votes)
+            comments_list = self.get_all_visible_elements(self.result_comments)
 
-            page_entries = self.get_all_visible_elements(self.result_bodies)
-            for entry in page_entries:
-                index = page_entries.index(entry)
-                if index < (len(page_entries) - 1):
+            for index, entry in enumerate(self.get_all_visible_elements(self.result_bodies)[:-1]):
+                saved_list_of_results.extend(list_of_result_entries)
 
-                    # Creating a new object from the post data on the page
-                    new_obj = {
-                        "title": self.get_all_visible_elements(self.result_titles)[index].get_attribute("text"),
-                        "name": self.get_all_visible_elements(self.result_users)[index].get_attribute("text"),
-                        "posted": self.get_all_visible_elements(self.result_time_posted)[index].get_attribute("text"),
-                        "vote": self.get_all_visible_elements(self.result_votes)[index].get_attribute("text"),
-                        "comments": self.get_all_visible_elements(self.result_comments)[index].get_attribute("text")
-                    }
-                    list_of_result_entries.append(new_obj)
+                # Creating a new object from the post data on the page
+                list_of_result_entries.append({
+                    "title": titles_list[index].text,
+                    "name": names_list[index].text,
+                    "posted": posted_list[index].text,
+                    "vote": votes_list[index].text,
+                    "comments": comments_list[index].text
+                })
 
-                    # Emergency exit in case of infinite cycle
-                    if iteration == 3:
-                        assert saved_len == len(list_of_result_entries), \
-                            "The list of posts is not filled with data. Perhaps there are no search results for " \
-                            "this query or their number is less than the required condition"
+            # Emergency exit in case of infinite cycle
+            if iteration == 3:
+                assert saved_list_of_results[-1].get("title") != list_of_result_entries[-1].get("title"), \
+                    "The list of posts is not filled with data. Perhaps there are no search results for " \
+                    "this query or their number is less than the required condition"
 
         return list_of_result_entries

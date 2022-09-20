@@ -17,7 +17,7 @@ class SearchPage(Base):
 
     def selecting_a_search_criterion(self, request: str):
         for result in self.get_all_visible_elements(self.search_results):
-            res_text = result.get_attribute("text")
+            res_text = result.text
             if res_text in [f'r/{request}', f'{request}']:
                 result.click()
                 return
