@@ -55,25 +55,3 @@ class ResultsPage(Base):
                             "this query or their number is less than the required condition"
 
         return list_of_result_entries
-
-    # def collect_results(self, min_items_count_to_collect=20) -> list[dict]:
-    #     list_of_result_entries = list()
-    #     while len(list_of_result_entries) <= min_items_count_to_collect:
-    #         self.scroll_results_list(self.result_bodies)
-    #         titles_list = self.get_all_visible_elements(self.result_titles)
-    #         names_list = self.get_all_visible_elements(self.result_users)
-    #         posted_list = self.get_all_visible_elements(self.result_time_posted)
-    #         votes_list = self.get_all_visible_elements(self.result_votes)
-    #         comments_list = self.get_all_visible_elements(self.result_comments)
-    #         for index, entry in enumerate(self.get_all_visible_elements(self.result_bodies)):
-    #             # Creating a new object from the post data on the page
-    #             list_of_result_entries.append({
-    #                 "title": titles_list[index].get_attribute("text"),
-    #                 "name": names_list[index].get_attribute("text"),
-    #                 "posted": posted_list[index].get_attribute("text"),
-    #                 "vote": votes_list[index].get_attribute("text"),
-    #                 "comments": comments_list[index].get_attribute("text")
-    #             })
-    #
-    #     return list_of_result_entries
-
